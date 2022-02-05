@@ -1,10 +1,21 @@
 import Header from "../../components/header/header";
+import Sidebar from "../../components/sidebar/sidebar";
+import Posts from "../../components/posts/post";
+
+import './home.css';
 
 function Home(props) {
     return (
-        <div>
+        <>
             <Header />
-        </div>
+            <div className="home">
+                <Posts />
+                <Sidebar />
+            </div>
+        </>
+
+
+
     );
 }
 
