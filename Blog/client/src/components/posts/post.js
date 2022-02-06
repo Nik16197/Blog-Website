@@ -2,15 +2,13 @@ import Pos from '../post/pos';
 import './post.css';
 
 
-function Posts() {
+function Posts({ posts }) {
+
     return (
         <div className="posts" >
-            <Pos />
-            <Pos />
-            <Pos />
-            <Pos />
-            <Pos />
-            <Pos />
+            {posts.map((p) => (
+                <Pos post={p} />
+            ))}
         </div>
     );
 }

@@ -1,17 +1,40 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './singlepost.css';
+import { useLocation } from "react-router-dom";
+import axios from "axios";
 
 function Singlepost() {
+
+    const [singlePost, setSinglepost] = useState({});
+    const loc = useLocation();
+    const id = loc.pathname.split("/")[2];
+
+    console.log(id)
+
+    useEffect(() => {
+        const getPost = async () => {
+            const res = await axios.get("/posts/" + id)
+            setSinglepost(res.data);
+        }
+
+        getPost();
+    }, [id])
+
     return (
         <div className="singlePost">
             <div className="singlePostWrapper">
-                <img
-                    className="singlePostImg"
-                    src="https://images.pexels.com/photos/6685428/pexels-photo-6685428.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
-                    alt=""
-                />
+                {
+                    singlePost.photo && (
+                        <img
+                            className="singlePostImg"
+                            src={singlePost.photo}
+                            alt=""
+                        />
+                    )
+                }
+
                 <h1 className="singlePostTitle">
-                    Lorem ipsum dolor
+                    {singlePost.title}
                     <div className="singlePostEdit">
                         <i className="singlePostIcon far fa-edit"></i>
                         <i className="singlePostIcon far fa-trash-alt"></i>
@@ -22,41 +45,15 @@ function Singlepost() {
                         Author:
                         <b className="singlePostAuthor">
                             {/* <Link className="link" to="/posts?username=Safak"> */}
-                            Safak
+                            {singlePost.username}
                             {/* </Link> */}
                         </b>
                     </span>
-                    <span>1 day ago</span>
+                    <span>{new Date(singlePost.createdAt).toDateString()}</span>
                 </div>
                 <p className="singlePostDesc">
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iste error
-                    quibusdam ipsa quis quidem doloribus eos, dolore ea iusto impedit!
-                    Voluptatum necessitatibus eum beatae, adipisci voluptas a odit modi
-                    eos! Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iste
-                    error quibusdam ipsa quis quidem doloribus eos, dolore ea iusto
-                    impedit! Voluptatum necessitatibus eum beatae, adipisci voluptas a
-                    odit modi eos! Lorem, ipsum dolor sit amet consectetur adipisicing
-                    elit. Iste error quibusdam ipsa quis quidem doloribus eos, dolore ea
-                    iusto impedit! Voluptatum necessitatibus eum beatae, adipisci voluptas
-                    a odit modi eos! Lorem, ipsum dolor sit amet consectetur adipisicing
-                    elit. Iste error quibusdam ipsa quis quidem doloribus eos, dolore ea
-                    iusto impedit! Voluptatum necessitatibus eum beatae, adipisci voluptas
-                    a odit modi eos! Lorem, ipsum dolor sit amet consectetur adipisicing
-                    elit. Iste error quibusdam ipsa quis quidem doloribus eos, dolore ea
-                    iusto impedit! Voluptatum necessitatibus eum beatae, adipisci voluptas
-                    a odit modi eos!
-                    <br />
-                    <br />
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iste error
-                    quibusdam ipsa quis quidem doloribus eos, dolore ea iusto impedit!
-                    Voluptatum necessitatibus eum beatae, adipisci voluptas a odit modi
-                    eos! Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iste
-                    error quibusdam ipsa quis quidem doloribus eos, dolore ea iusto
-                    impedit! Voluptatum necessitatibus eum beatae, adipisci voluptas a
-                    odit modi eos! Lorem, ipsum dolor sit amet consectetur adipisicing
-                    elit. Iste error quibusdam ipsa quis quidem doloribus eos, dolore ea
-                    iusto impedit! Voluptatum necessitatibus eum beatae, adipisci voluptas
-                    a odit modi eos! Lorem, ipsum dolor sit amet consectetur.
+                    {singlePost.desc}
+
                 </p>
             </div>
         </div>
