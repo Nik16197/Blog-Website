@@ -1,35 +1,41 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 import "./pos.css"
 
-function Pos() {
+function Pos({ post }) {
+
+
+
     return (
         <div className='pos'>
-            <img className='posImage' src="https://github.githubassets.com/images/modules/site/home/hero-glow.svg" alt="" />
+            {
+                post.photo && (
+                    <img className='posImage'
+                        src={post.photo}
+                        alt="" />
+                )
+            }
+
             <div className='posInfo'>
                 <div className='posCats'>
-                    <span className='posCat'>Music</span>
-                    <span className='posCat'>Life</span>
+                    {
+                        post.categories.map((c) => (
+                            <span className='posCat'>{c}</span>
+                        ))
+                    }
 
                 </div>
 
-                <span className="posTitle">  Lorem ipsum dolor sit amet</span>
+                <Link to={`/post/${post._id}`} className="link">
+                    <span className="posTitle">  {post.title}</span>
+                </Link>
+
                 <hr />
 
-                <span className="posDate">1hr ago</span>
+                <span className="posDate">{new Date(post.createdAt).toDateString()}</span>
 
                 <p className="posDesc">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda
-                    officia architecto deserunt deleniti? Labore ipsum aspernatur magnam
-                    fugiat, reprehenderit praesentium blanditiis quos cupiditate ratione
-                    atque, exercitationem quibusdam, reiciendis odio laboriosam?
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda
-                    officia architecto deserunt deleniti? Labore ipsum aspernatur magnam
-                    fugiat, reprehenderit praesentium blanditiis quos cupiditate ratione
-                    atque, exercitationem quibusdam, reiciendis odio laboriosam?
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda
-                    officia architecto deserunt deleniti? Labore ipsum aspernatur magnam
-                    fugiat, reprehenderit praesentium blanditiis quos cupiditate ratione
-                    atque, exercitationem quibusdam, reiciendis odio laboriosam?
+                    {post.desc}
                 </p>
             </div>
         </div>
