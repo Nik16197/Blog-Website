@@ -84,7 +84,7 @@ router.get("/", async (req, res) => {
 
     const username = req.query.user;
     const cats = req.query.cat;
-    cats = "Allrounder";
+
     try {
 
         let posts;
