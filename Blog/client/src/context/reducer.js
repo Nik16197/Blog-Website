@@ -21,7 +21,9 @@ const Reducer = (state, action) => {
                 user: null,
                 isFetching: false,
                 error: true
-            }
+            };
+        default:
+            return state;
     }
 
 }
