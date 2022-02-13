@@ -8,10 +8,12 @@ import Write from "./pages/write/write";
 
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Singlepost from "./components/singlePost/singlepost";
+import { useContext } from "react";
+import { Context } from "./context/context";
 
 function App() {
 
-  const user = false;
+  const user = useContext(Context);
 
 
   return (

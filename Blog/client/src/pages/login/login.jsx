@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import "./login.css";
 import { useRef } from "react";
@@ -12,12 +12,21 @@ export default function Login() {
 
     const { user, dispatch, isFetching } = useContext(Context);
 
-    const handleSubmit = (e) => {
-        console.log(e);
+    const handleSubmit = async (e) => {
+
         e.preventDefault();
+        dispatch({ type: "LOGIN_START" });
+        try {
+            const res = await axios.post("/auth/login", {
+                username: userRef.current.value
+            })
 
+            dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
+
+        } catch (err) {
+            dispatch({ type: "LOGIN_FAILURE" });
+        }
     }
-
 
     return (
         <div className="login">
@@ -38,7 +47,7 @@ export default function Login() {
 
                 />
 
-                <button className="loginButton" type="submit">Login</button>
+                <button className="loginButton" type="submit" disabled={isFetching}>Login</button>
 
             </form>
             <button className="loginRegisterButton">
