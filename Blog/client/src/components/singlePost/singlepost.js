@@ -9,17 +9,26 @@ function Singlepost() {
     const loc = useLocation();
     const id = loc.pathname.split("/")[2];
 
-    console.log(id)
-
+    console.log("id   " + id)
     useEffect(() => {
         const getPost = async () => {
             const res = await axios.get("/posts/" + id)
             setSinglepost(res.data);
+
+            // console.log(res)
         }
 
         getPost();
     }, [id])
 
+    const handleDelete = async (e) => {
+        try {
+            await axios.delete("/posts/" + id)
+        } catch (err) {
+
+        }
+
+    }
     return (
         <div className="singlePost">
             <div className="singlePostWrapper">
@@ -37,7 +46,7 @@ function Singlepost() {
                     {singlePost.title}
                     <div className="singlePostEdit">
                         <i className="singlePostIcon far fa-edit"></i>
-                        <i className="singlePostIcon far fa-trash-alt"></i>
+                        <i className="singlePostIcon far fa-trash-alt" onClick={handleDelete}></i>
                     </div>
                 </h1>
                 <div className="singlePostInfo">
